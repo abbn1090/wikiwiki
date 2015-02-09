@@ -1,0 +1,48 @@
+{% load django_markdown %}
+{% block blog_articles %}
+{% load staticfiles %}
+
+<h1><a  href="{% url "wiki_article_detail" slug=object.slug %}">{{ object.title }}</a></h1>
+<p class="meta">
+
+{{ object.created_on }} |
+Written by {{ object.author }}
+</p>
+{{ object.text|markdown }}
+
+{% endblock %}
+ 
+ 
+ 
+
+{% if messages %}
+    <div class="messages">
+    <ul>
+    {% for message in messages %}
+        <li class="{{ message.tag }}">
+            {{ message }} 
+        </li>
+        {% endfor %}
+    </ul>
+    </div>
+{% endif %}
+
+{% if not object.is_published %}
+    <label>Note: This article has not been published yet</label>
+{% endif %}
+
+
+
+<h3>Actions<h3>
+<ul>
+    <li>
+        <a href="{% url "wiki_article_edit" object.slug %}">Edit this article</a>
+    </li>
+    <li>
+        <a href="{% url "wiki_article_history" object.slug %}">View article history</a>
+    </li>
+</ul>
+
+<a href="{% url "wiki_article_index" %}">See All</a>
+
+

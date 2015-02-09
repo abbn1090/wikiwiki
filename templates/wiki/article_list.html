@@ -1,0 +1,17 @@
+{% load django_markdown %}
+{% block blog_articles %}
+{% load staticfiles %}
+{% for object in object_list %}
+
+<h1><a  href="{% url "wiki_article_detail" slug=object.slug %}">{{ object.title }}</a></h1>
+<p class="meta">
+{{ object.created_on }} |
+Written by {{ object.author }}
+</p>
+
+              <p>{{ object.text|markdown }}</p>
+            
+
+<a href="{% url "wiki_article_add"  %}">Create new article</a>
+{% endfor %}
+{% endblock %}
